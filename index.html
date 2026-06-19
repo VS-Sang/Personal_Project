@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LedgerFlow | Expense Tracker</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'surface-dim': '#cbdbf5',
+            'inverse-on-surface': '#eaf1ff',
+            'primary-fixed': '#dbe1ff',
+            'tertiary-fixed': '#ffdad7',
+            'on-background': '#0b1c30',
+            'background': '#f8f9ff',
+            'on-surface': '#0b1c30',
+            'surface-container-highest': '#d3e4fe',
+            'surface-variant': '#d3e4fe',
+            'surface-container-lowest': '#ffffff',
+            'secondary': '#006c49',
+            'on-error-container': '#93000a',
+            'on-secondary': '#ffffff',
+            'on-secondary-fixed': '#002113',
+            'on-tertiary-container': '#ffecea',
+            'tertiary-fixed-dim': '#ffb3ad',
+            'on-error': '#ffffff',
+            'surface': '#f8f9ff',
+            'on-secondary-fixed-variant': '#005236',
+            'error': '#ba1a1a',
+            'primary': '#004ac6',
+            'on-primary': '#ffffff',
+            'inverse-surface': '#213145',
+            'on-secondary-container': '#00714d',
+            'on-primary-fixed-variant': '#003ea8',
+            'error-container': '#ffdad6',
+            'on-primary-fixed': '#00174b',
+            'primary-container': '#2563eb',
+            'on-tertiary-fixed': '#410004',
+            'inverse-primary': '#b4c5ff',
+            'on-tertiary-fixed-variant': '#930013',
+            'outline-variant': '#c3c6d7',
+            'outline': '#737686',
+            'on-surface-variant': '#434655',
+            'on-tertiary': '#ffffff',
+            'primary-fixed-dim': '#b4c5ff',
+            'tertiary-container': '#cf2c30',
+            'on-primary-container': '#eeefff',
+            'surface-bright': '#f8f9ff',
+            'secondary-fixed-dim': '#4edea3',
+            'tertiary': '#ab0b1c',
+            'surface-tint': '#0053db',
+            'secondary-container': '#6cf8bb',
+            'surface-container': '#e5eeff',
+            'surface-container-high': '#dce9ff',
+            'surface-container-low': '#eff4ff',
+            'secondary-fixed': '#6ffbbe'
+          },
+          borderRadius: {
+            DEFAULT: '0.125rem',
+            lg: '0.25rem',
+            xl: '0.5rem',
+            '2xl': '0.75rem',
+            full: '999px'
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas']
+          },
+          fontSize: {
+            'display-lg': ['36px', { lineHeight: '44px', letterSpacing: '-0.02em', fontWeight: '700' }],
+            'headline-lg': ['24px', { lineHeight: '32px', letterSpacing: '-0.01em', fontWeight: '600' }],
+            'headline-md': ['20px', { lineHeight: '28px', fontWeight: '600' }],
+            'body-lg': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+            'body-md': ['14px', { lineHeight: '20px', fontWeight: '400' }],
+            'label-md': ['12px', { lineHeight: '16px', letterSpacing: '0.05em', fontWeight: '500' }]
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-background text-on-surface font-inter">
+  <aside class="fixed left-0 top-0 z-40 hidden h-screen w-64 flex-col border-r border-outline-variant bg-surface p-4 md:flex">
+    <a href="#dashboard" class="flex items-center gap-2 px-2 py-1" aria-label="LedgerFlow home">
+      <span class="brand-mark material-symbols-outlined">account_balance_wallet</span>
+      <span>
+        <strong class="block text-headline-md text-primary">LedgerFlow</strong>
+        <span class="text-label-md text-on-surface-variant">Personal Finance</span>
+      </span>
+    </a>
+
+    <nav class="mt-6 flex flex-1 flex-col gap-1" aria-label="Main navigation">
+      <a class="nav-link active" href="#dashboard"><span class="material-symbols-outlined">dashboard</span>Dashboard</a>
+      <a class="nav-link" href="#transactions"><span class="material-symbols-outlined">receipt_long</span>Transactions</a>
+      <a class="nav-link" href="#reports"><span class="material-symbols-outlined">bar_chart</span>Reports</a>
+      <a class="nav-link" href="#budgets"><span class="material-symbols-outlined">savings</span>Budgets</a>
+    </nav>
+
+    <button class="primary-button mb-4" data-open-modal>
+      <span class="material-symbols-outlined text-[18px]">add</span>
+      Add Transaction
+    </button>
+
+    <div class="border-t border-outline-variant pt-4">
+      <a class="nav-link" href="#settings"><span class="material-symbols-outlined">settings</span>Settings</a>
+      <a class="nav-link" href="#help"><span class="material-symbols-outlined">help</span>Help</a>
+    </div>
+
+    <div class="mt-4 flex items-center gap-3 p-2">
+      <div class="grid h-10 w-10 place-items-center rounded-full border border-outline-variant bg-surface-container-highest text-primary">
+        <span class="material-symbols-outlined">person</span>
+      </div>
+      <div class="min-w-0">
+        <p class="truncate text-label-md font-bold">Alex Chen</p>
+        <p class="truncate text-[10px] text-on-surface-variant">Developer Plan</p>
+      </div>
+    </div>
+  </aside>
+
+  <main class="min-h-screen pb-28 md:ml-64 md:pb-0">
+    <div class="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-8">
+      <header id="dashboard" class="scroll-section mb-12 flex items-center justify-between">
+        <div>
+          <h1 class="text-headline-lg text-on-surface">Financial Summary</h1>
+          <p class="mt-1 text-body-md text-on-surface-variant">Welcome back, developer. Here's your status.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="icon-button" aria-label="Notifications"><span class="material-symbols-outlined">notifications</span></button>
+          <div class="grid h-10 w-10 place-items-center overflow-hidden rounded-full border border-outline-variant bg-surface-container-highest text-primary" aria-label="User profile">
+            <span class="material-symbols-outlined">person</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="scroll-section mb-8 grid grid-cols-1 gap-4 md:grid-cols-3" aria-label="Financial summary cards">
+        <article class="summary-card primary-card md:col-span-1">
+          <div class="relative z-10">
+            <p class="text-label-md uppercase text-primary-fixed">Total Balance</p>
+            <p class="mt-2 text-display-lg">$12,840.50</p>
+            <p class="mt-5 inline-flex items-center gap-1 text-label-md text-primary-fixed"><span class="material-symbols-outlined text-[16px]">trending_up</span>+2.4% from last month</p>
+          </div>
+          <span class="material-symbols-outlined absolute right-5 top-5 text-[72px] opacity-15">account_balance_wallet</span>
+        </article>
+        <article class="summary-card">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-label-md uppercase text-on-surface-variant">Monthly Income</p>
+              <p class="mt-2 text-headline-lg font-bold">$5,200.00</p>
+            </div>
+            <span class="material-symbols-outlined text-secondary">arrow_downward</span>
+          </div>
+          <div class="mt-8 h-1.5 overflow-hidden rounded-full bg-surface-container">
+            <div class="h-full w-3/4 bg-secondary"></div>
+          </div>
+          <p class="mt-3 text-label-md text-on-surface-variant">75% of monthly target reached</p>
+        </article>
+        <article class="summary-card">
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-label-md uppercase text-on-surface-variant">Monthly Expenses</p>
+              <p class="mt-2 text-headline-lg font-bold">$3,120.25</p>
+            </div>
+            <span class="material-symbols-outlined text-error">arrow_upward</span>
+          </div>
+          <div class="mt-8 h-1.5 overflow-hidden rounded-full bg-surface-container">
+            <div class="h-full w-[60%] bg-error"></div>
+          </div>
+          <p class="mt-3 text-label-md text-on-surface-variant">60% of budget consumed</p>
+        </article>
+      </section>
+
+      <section class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <article class="scroll-section panel lg:col-span-2">
+          <div class="mb-4 flex items-center justify-between">
+            <div>
+              <p class="eyebrow">Activity</p>
+              <h2 class="text-headline-md">Recent Transactions</h2>
+            </div>
+            <a class="text-sm font-semibold text-primary hover:underline" href="#transactions">View All</a>
+          </div>
+          <div class="divide-y divide-outline-variant">
+            <div class="transaction-row"><span class="category-icon bg-secondary-container text-on-secondary-container"><span class="material-symbols-outlined">payments</span></span><div><p class="font-semibold">Monthly Salary</p><p class="text-label-md text-on-surface-variant">Oct 23, 2023 • Income</p></div><strong class="ml-auto text-secondary">+$4,250.00</strong></div>
+            <div class="transaction-row"><span class="category-icon bg-tertiary-fixed text-on-tertiary-fixed"><span class="material-symbols-outlined">restaurant</span></span><div><p class="font-semibold">Whole Foods Market</p><p class="text-label-md text-on-surface-variant">Oct 24, 2023 • Food</p></div><strong class="ml-auto text-error">-$142.30</strong></div>
+            <div class="transaction-row"><span class="category-icon bg-surface-container-highest text-on-surface-variant"><span class="material-symbols-outlined">home</span></span><div><p class="font-semibold">Luxury Lofts Rent</p><p class="text-label-md text-on-surface-variant">Oct 01, 2023 • Rent</p></div><strong class="ml-auto text-error">-$1,800.00</strong></div>
+            <div class="transaction-row"><span class="category-icon bg-primary-fixed text-on-primary-fixed"><span class="material-symbols-outlined">shopping_bag</span></span><div><p class="font-semibold">Amazon.com</p><p class="text-label-md text-on-surface-variant">Oct 15, 2023 • Shopping</p></div><strong class="ml-auto text-error">-$89.99</strong></div>
+          </div>
+        </article>
+
+        <aside class="space-y-4">
+          <article id="budgets" class="scroll-section panel">
+            <div class="mb-5 flex items-center justify-between">
+              <div>
+                <p class="eyebrow">Savings Goal</p>
+                <h2 class="text-headline-md">Emergency Fund</h2>
+              </div>
+              <span class="material-symbols-outlined text-primary">savings</span>
+            </div>
+            <div class="mb-3 flex items-end justify-between">
+              <p class="text-headline-lg font-bold">$8,450</p>
+              <p class="text-label-md text-on-surface-variant">of $10,000</p>
+            </div>
+            <div class="h-2 overflow-hidden rounded-full bg-surface-container">
+              <div class="h-full w-[84%] bg-primary"></div>
+            </div>
+            <p class="mt-4 text-sm text-on-surface-variant">You are $1,550 away from your safety target.</p>
+          </article>
+
+          <article class="scroll-section panel">
+            <div class="mb-5 flex items-center justify-between">
+              <div>
+                <p class="eyebrow">Categories</p>
+                <h2 class="text-headline-md">Expense Mix</h2>
+              </div>
+              <span class="material-symbols-outlined text-error">donut_small</span>
+            </div>
+            <div class="space-y-4">
+              <div class="chart-line"><span>Rent</span><div><i style="width: 78%"></i></div><b>$1,800</b></div>
+              <div class="chart-line"><span>Food</span><div><i style="width: 42%"></i></div><b>$920</b></div>
+              <div class="chart-line"><span>Transport</span><div><i style="width: 24%"></i></div><b>$430</b></div>
+              <div class="chart-line"><span>Shopping</span><div><i style="width: 18%"></i></div><b>$315</b></div>
+            </div>
+          </article>
+        </aside>
+      </section>
+
+      <section id="transactions" class="scroll-section mt-8">
+        <div class="mb-4 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="eyebrow">Ledger</p>
+            <h2 class="text-headline-lg">Past Transactions</h2>
+            <p class="mt-1 text-body-md text-on-surface-variant">Track and manage your history.</p>
+          </div>
+        </div>
+
+        <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-12">
+          <div class="flex flex-wrap items-center gap-2 rounded-xl border border-outline-variant bg-surface-container-lowest p-4 md:col-span-8">
+            <span class="mr-1 text-label-md uppercase text-on-surface-variant">Filters:</span>
+            <button class="filter-chip active" data-filter="all">All</button>
+            <button class="filter-chip" data-filter="Food"><span class="material-symbols-outlined text-[16px]">restaurant</span>Food</button>
+            <button class="filter-chip" data-filter="Transport"><span class="material-symbols-outlined text-[16px]">directions_car</span>Transport</button>
+            <button class="filter-chip" data-filter="Rent"><span class="material-symbols-outlined text-[16px]">home</span>Rent</button>
+            <button class="filter-chip" data-filter="Shopping"><span class="material-symbols-outlined text-[16px]">shopping_bag</span>Shopping</button>
+            <button class="filter-chip" data-filter="Income"><span class="material-symbols-outlined text-[16px]">payments</span>Income</button>
+          </div>
+          <div class="date-card md:col-span-4">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary">calendar_today</span>
+              <div>
+                <span class="block text-label-md text-on-surface-variant">Date Range</span>
+                <strong class="text-body-md">Oct 01 - Oct 31, 2023</strong>
+              </div>
+            </div>
+            <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+          </div>
+        </div>
+
+        <div class="table-panel overflow-hidden">
+          <div class="hidden grid-cols-12 gap-4 border-b border-outline-variant bg-surface-container-low p-4 text-label-md uppercase text-on-surface-variant md:grid">
+            <div class="col-span-4">Description / Note</div>
+            <div class="col-span-2">Category</div>
+            <div class="col-span-2">Date</div>
+            <div class="col-span-2 text-right">Amount</div>
+            <div class="col-span-2 text-right">Actions</div>
+          </div>
+          <div id="transaction-list" class="divide-y divide-outline-variant"></div>
+          <div class="flex flex-col items-center justify-between gap-4 border-t border-outline-variant bg-surface-container-low p-4 md:flex-row">
+            <p class="text-label-md text-on-surface-variant">Showing 1-6 of 42 transactions</p>
+            <div class="flex items-center gap-1">
+              <button class="pager" disabled><span class="material-symbols-outlined">chevron_left</span></button>
+              <button class="pager active">1</button>
+              <button class="pager">2</button>
+              <button class="pager">3</button>
+              <button class="pager"><span class="material-symbols-outlined">chevron_right</span></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="reports" class="scroll-section mt-8">
+        <div class="mb-4 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p class="eyebrow">Reports & Analytics</p>
+            <h2 class="text-headline-lg">Financial Analytics</h2>
+            <p class="mt-1 text-body-md text-on-surface-variant">Understand income, expenses, categories, and savings trend.</p>
+          </div>
+          <button class="secondary-button"><span class="material-symbols-outlined text-[18px]">download</span>Export Report</button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <article class="panel">
+            <p class="text-label-md uppercase text-on-surface-variant">Net Savings</p>
+            <p class="mt-2 text-headline-lg font-bold text-primary">$2,148.88</p>
+            <p class="mt-2 text-sm text-on-surface-variant">51% savings rate this period.</p>
+          </article>
+          <article class="panel">
+            <p class="text-label-md uppercase text-on-surface-variant">Top Expense</p>
+            <p class="mt-2 text-headline-lg font-bold text-error">Rent</p>
+            <p class="mt-2 text-sm text-on-surface-variant">58% of total expenses.</p>
+          </article>
+          <article class="panel">
+            <p class="text-label-md uppercase text-on-surface-variant">Best Opportunity</p>
+            <p class="mt-2 text-headline-lg font-bold text-secondary">Food</p>
+            <p class="mt-2 text-sm text-on-surface-variant">Reduce by 12% to save $110.</p>
+          </article>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-5">
+          <article class="panel lg:col-span-3">
+            <div class="mb-6 flex items-center justify-between">
+              <h3 class="text-headline-md">Income vs Expenses</h3>
+              <span class="text-label-md text-on-surface-variant">Last 6 months</span>
+            </div>
+            <div class="bar-chart" aria-label="Income versus expenses chart">
+              <div><span style="height: 72%" class="income"></span><span style="height: 48%" class="expense"></span><small>May</small></div>
+              <div><span style="height: 80%" class="income"></span><span style="height: 52%" class="expense"></span><small>Jun</small></div>
+              <div><span style="height: 65%" class="income"></span><span style="height: 58%" class="expense"></span><small>Jul</small></div>
+              <div><span style="height: 88%" class="income"></span><span style="height: 51%" class="expense"></span><small>Aug</small></div>
+              <div><span style="height: 76%" class="income"></span><span style="height: 61%" class="expense"></span><small>Sep</small></div>
+              <div><span style="height: 92%" class="income"></span><span style="height: 55%" class="expense"></span><small>Oct</small></div>
+            </div>
+          </article>
+          <article class="panel lg:col-span-2">
+            <div class="mb-6 flex items-center justify-between">
+              <h3 class="text-headline-md">Spending by Category</h3>
+              <span class="material-symbols-outlined text-primary">pie_chart</span>
+            </div>
+            <div class="donut-wrap">
+              <div class="donut" aria-hidden="true"></div>
+              <ul class="space-y-3 text-sm">
+                <li><span class="legend bg-error"></span>Rent 58%</li>
+                <li><span class="legend bg-primary"></span>Food 22%</li>
+                <li><span class="legend bg-secondary"></span>Transport 12%</li>
+                <li><span class="legend bg-tertiary"></span>Shopping 8%</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="scroll-section mt-8 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <article class="panel lg:col-span-2">
+          <div class="mb-4 flex items-center justify-between">
+            <div>
+              <p class="eyebrow">Insights</p>
+              <h2 class="text-headline-md">Suggestions</h2>
+            </div>
+            <span class="material-symbols-outlined text-primary">lightbulb</span>
+          </div>
+          <div class="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div class="insight-card"><b>Food spending is rising</b><p>Weekly groceries are 14% above last month. Set a $200 weekly cap.</p></div>
+            <div class="insight-card"><b>Savings goal on track</b><p>At the current rate, your emergency fund reaches target next month.</p></div>
+          </div>
+        </article>
+        <article id="settings" class="panel">
+          <p class="eyebrow">Quick Add</p>
+          <h2 class="mb-4 text-headline-md">New Transaction</h2>
+          <form id="quick-form" class="space-y-3">
+            <label class="form-label">Description<input required name="description" placeholder="Coffee, salary, rent..." /></label>
+            <label class="form-label">Amount<input required name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" /></label>
+            <label class="form-label">Type<select name="type"><option value="expense">Expense</option><option value="income">Income</option></select></label>
+            <button class="primary-button w-full" type="submit">Save Transaction</button>
+          </form>
+        </article>
+      </section>
+
+      <section id="help" class="scroll-section mt-8 rounded-xl border border-outline-variant bg-inverse-surface p-6 text-inverse-on-surface">
+        <p class="eyebrow text-primary-fixed">Ready for your next review</p>
+        <h2 class="mt-2 text-headline-lg">Built for clean financial decisions.</h2>
+        <p class="mt-2 max-w-2xl text-sm text-inverse-on-surface/80">LedgerFlow keeps money data structured, readable, and calm with consistent cards, tables, charts, and scroll-triggered motion.</p>
+      </section>
+    </div>
+  </main>
+
+  <nav class="fixed bottom-0 left-0 right-0 z-50 border-t border-outline-variant bg-surface-container-lowest/95 px-3 py-2 backdrop-blur md:hidden" aria-label="Mobile navigation">
+    <div class="mx-auto grid max-w-md grid-cols-5 items-center gap-1">
+      <a class="mobile-link active" href="#dashboard"><span class="material-symbols-outlined">dashboard</span><small>Home</small></a>
+      <a class="mobile-link" href="#transactions"><span class="material-symbols-outlined">receipt_long</span><small>Ledger</small></a>
+      <button class="mobile-add" data-open-modal aria-label="Add transaction"><span class="material-symbols-outlined">add</span></button>
+      <a class="mobile-link" href="#reports"><span class="material-symbols-outlined">bar_chart</span><small>Reports</small></a>
+      <a class="mobile-link" href="#settings"><span class="material-symbols-outlined">settings</span><small>Settings</small></a>
+    </div>
+  </nav>
+
+  <dialog id="transaction-modal" class="modal-card">
+    <form method="dialog" class="panel w-[min(92vw,440px)]">
+      <div class="mb-4 flex items-start justify-between">
+        <div>
+          <p class="eyebrow">New Entry</p>
+          <h2 class="text-headline-md">Add Transaction</h2>
+        </div>
+        <button class="icon-button" value="cancel" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="space-y-3">
+        <label class="form-label">Description<input placeholder="e.g. Client invoice" /></label>
+        <label class="form-label">Amount<input type="number" min="0.01" step="0.01" placeholder="0.00" /></label>
+        <label class="form-label">Category<select><option>Food</option><option>Income</option><option>Rent</option><option>Transport</option><option>Shopping</option></select></label>
+        <label class="form-label">Date<input type="date" /></label>
+      </div>
+      <div class="mt-5 flex justify-end gap-2">
+        <button class="secondary-button" value="cancel">Cancel</button>
+        <button class="primary-button w-auto px-5" value="default">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

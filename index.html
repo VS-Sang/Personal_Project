@@ -144,8 +144,8 @@
         <article class="summary-card primary-card md:col-span-1">
           <div class="relative z-10">
             <p class="text-label-md uppercase text-primary-fixed">Total Balance</p>
-            <p class="mt-2 text-display-lg">$12,840.50</p>
-            <p class="mt-5 inline-flex items-center gap-1 text-label-md text-primary-fixed"><span class="material-symbols-outlined text-[16px]">trending_up</span>+2.4% from last month</p>
+            <p class="mt-2 text-display-lg" id="total-balance">$12,840.50</p>
+            <p class="mt-5 inline-flex items-center gap-1 text-label-md text-primary-fixed" id="total-balance-trend"><span class="material-symbols-outlined text-[16px]">trending_up</span>+2.4% from last month</p>
           </div>
           <span class="material-symbols-outlined absolute right-5 top-5 text-[72px] opacity-15">account_balance_wallet</span>
         </article>
@@ -153,27 +153,27 @@
           <div class="flex items-start justify-between">
             <div>
               <p class="text-label-md uppercase text-on-surface-variant">Monthly Income</p>
-              <p class="mt-2 text-headline-lg font-bold">$5,200.00</p>
+              <p class="mt-2 text-headline-lg font-bold" id="monthly-income">$5,200.00</p>
             </div>
             <span class="material-symbols-outlined text-secondary">arrow_downward</span>
           </div>
           <div class="mt-8 h-1.5 overflow-hidden rounded-full bg-surface-container">
-            <div class="h-full w-3/4 bg-secondary"></div>
+            <div class="h-full bg-secondary" id="income-progress" style="width: 75%"></div>
           </div>
-          <p class="mt-3 text-label-md text-on-surface-variant">75% of monthly target reached</p>
+          <p class="mt-3 text-label-md text-on-surface-variant" id="income-progress-text">75% of monthly target reached</p>
         </article>
         <article class="summary-card">
           <div class="flex items-start justify-between">
             <div>
               <p class="text-label-md uppercase text-on-surface-variant">Monthly Expenses</p>
-              <p class="mt-2 text-headline-lg font-bold">$3,120.25</p>
+              <p class="mt-2 text-headline-lg font-bold" id="monthly-expenses">$3,120.25</p>
             </div>
             <span class="material-symbols-outlined text-error">arrow_upward</span>
           </div>
           <div class="mt-8 h-1.5 overflow-hidden rounded-full bg-surface-container">
-            <div class="h-full w-[60%] bg-error"></div>
+            <div class="h-full bg-error" id="expense-progress" style="width: 60%"></div>
           </div>
-          <p class="mt-3 text-label-md text-on-surface-variant">60% of budget consumed</p>
+          <p class="mt-3 text-label-md text-on-surface-variant" id="expense-progress-text">60% of budget consumed</p>
         </article>
       </section>
 
@@ -186,7 +186,7 @@
             </div>
             <a class="text-sm font-semibold text-primary hover:underline" href="#transactions">View All</a>
           </div>
-          <div class="divide-y divide-outline-variant">
+          <div class="divide-y divide-outline-variant" id="recent-transactions">
             <div class="transaction-row"><span class="category-icon bg-secondary-container text-on-secondary-container"><span class="material-symbols-outlined">payments</span></span><div><p class="font-semibold">Monthly Salary</p><p class="text-label-md text-on-surface-variant">Oct 23, 2023 • Income</p></div><strong class="ml-auto text-secondary">+$4,250.00</strong></div>
             <div class="transaction-row"><span class="category-icon bg-tertiary-fixed text-on-tertiary-fixed"><span class="material-symbols-outlined">restaurant</span></span><div><p class="font-semibold">Whole Foods Market</p><p class="text-label-md text-on-surface-variant">Oct 24, 2023 • Food</p></div><strong class="ml-auto text-error">-$142.30</strong></div>
             <div class="transaction-row"><span class="category-icon bg-surface-container-highest text-on-surface-variant"><span class="material-symbols-outlined">home</span></span><div><p class="font-semibold">Luxury Lofts Rent</p><p class="text-label-md text-on-surface-variant">Oct 01, 2023 • Rent</p></div><strong class="ml-auto text-error">-$1,800.00</strong></div>
@@ -204,13 +204,13 @@
               <span class="material-symbols-outlined text-primary">savings</span>
             </div>
             <div class="mb-3 flex items-end justify-between">
-              <p class="text-headline-lg font-bold">$8,450</p>
-              <p class="text-label-md text-on-surface-variant">of $10,000</p>
+              <p class="text-headline-lg font-bold" id="savings-goal-current">$8,450</p>
+              <p class="text-label-md text-on-surface-variant" id="savings-goal-target">of $10,000</p>
             </div>
             <div class="h-2 overflow-hidden rounded-full bg-surface-container">
-              <div class="h-full w-[84%] bg-primary"></div>
+              <div class="h-full bg-primary" id="savings-goal-progress" style="width: 84%"></div>
             </div>
-            <p class="mt-4 text-sm text-on-surface-variant">You are $1,550 away from your safety target.</p>
+            <p class="mt-4 text-sm text-on-surface-variant" id="savings-goal-text">You are $1,550 away from your safety target.</p>
           </article>
 
           <article class="scroll-section panel">
@@ -221,7 +221,7 @@
               </div>
               <span class="material-symbols-outlined text-error">donut_small</span>
             </div>
-            <div class="space-y-4">
+            <div class="space-y-4" id="expense-mix">
               <div class="chart-line"><span>Rent</span><div><i style="width: 78%"></i></div><b>$1,800</b></div>
               <div class="chart-line"><span>Food</span><div><i style="width: 42%"></i></div><b>$920</b></div>
               <div class="chart-line"><span>Transport</span><div><i style="width: 24%"></i></div><b>$430</b></div>
@@ -255,7 +255,7 @@
               <span class="material-symbols-outlined text-primary">calendar_today</span>
               <div>
                 <span class="block text-label-md text-on-surface-variant">Date Range</span>
-                <strong class="text-body-md">Oct 01 - Oct 31, 2023</strong>
+                <strong class="text-body-md" id="date-range-display">Oct 01 - Oct 31, 2023</strong>
               </div>
             </div>
             <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
@@ -297,18 +297,18 @@
         <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
           <article class="panel">
             <p class="text-label-md uppercase text-on-surface-variant">Net Savings</p>
-            <p class="mt-2 text-headline-lg font-bold text-primary">$2,148.88</p>
-            <p class="mt-2 text-sm text-on-surface-variant">51% savings rate this period.</p>
+            <p class="mt-2 text-headline-lg font-bold text-primary" id="net-savings">$2,148.88</p>
+            <p class="mt-2 text-sm text-on-surface-variant" id="net-savings-rate">51% savings rate this period.</p>
           </article>
           <article class="panel">
             <p class="text-label-md uppercase text-on-surface-variant">Top Expense</p>
-            <p class="mt-2 text-headline-lg font-bold text-error">Rent</p>
-            <p class="mt-2 text-sm text-on-surface-variant">58% of total expenses.</p>
+            <p class="mt-2 text-headline-lg font-bold text-error" id="top-expense">Rent</p>
+            <p class="mt-2 text-sm text-on-surface-variant" id="top-expense-percentage">58% of total expenses.</p>
           </article>
           <article class="panel">
             <p class="text-label-md uppercase text-on-surface-variant">Best Opportunity</p>
-            <p class="mt-2 text-headline-lg font-bold text-secondary">Food</p>
-            <p class="mt-2 text-sm text-on-surface-variant">Reduce by 12% to save $110.</p>
+            <p class="mt-2 text-headline-lg font-bold text-secondary" id="best-opportunity">Food</p>
+            <p class="mt-2 text-sm text-on-surface-variant" id="opportunity-desc">Reduce by 12% to save $110.</p>
           </article>
         </div>
 
@@ -318,7 +318,7 @@
               <h3 class="text-headline-md">Income vs Expenses</h3>
               <span class="text-label-md text-on-surface-variant">Last 6 months</span>
             </div>
-            <div class="bar-chart" aria-label="Income versus expenses chart">
+            <div class="bar-chart" id="income-expense-chart" aria-label="Income versus expenses chart">
               <div><span style="height: 72%" class="income"></span><span style="height: 48%" class="expense"></span><small>May</small></div>
               <div><span style="height: 80%" class="income"></span><span style="height: 52%" class="expense"></span><small>Jun</small></div>
               <div><span style="height: 65%" class="income"></span><span style="height: 58%" class="expense"></span><small>Jul</small></div>
@@ -333,8 +333,8 @@
               <span class="material-symbols-outlined text-primary">pie_chart</span>
             </div>
             <div class="donut-wrap">
-              <div class="donut" aria-hidden="true"></div>
-              <ul class="space-y-3 text-sm">
+              <div class="donut" id="donut-chart" aria-hidden="true"></div>
+              <ul class="space-y-3 text-sm" id="donut-legend">
                 <li><span class="legend bg-error"></span>Rent 58%</li>
                 <li><span class="legend bg-primary"></span>Food 22%</li>
                 <li><span class="legend bg-secondary"></span>Transport 12%</li>
@@ -366,6 +366,7 @@
             <label class="form-label">Description<input required name="description" placeholder="Coffee, salary, rent..." /></label>
             <label class="form-label">Amount<input required name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" /></label>
             <label class="form-label">Type<select name="type"><option value="expense">Expense</option><option value="income">Income</option></select></label>
+            <p id="quick-form-error" class="hidden text-xs font-semibold text-error mt-2" role="alert"></p>
             <button class="primary-button w-full" type="submit">Save Transaction</button>
           </form>
         </article>
@@ -390,23 +391,25 @@
   </nav>
 
   <dialog id="transaction-modal" class="modal-card">
-    <form method="dialog" class="panel w-[min(92vw,440px)]">
+    <form id="transaction-form" class="panel w-[min(92vw,440px)]" novalidate>
       <div class="mb-4 flex items-start justify-between">
         <div>
-          <p class="eyebrow">New Entry</p>
-          <h2 class="text-headline-md">Add Transaction</h2>
+          <p id="transaction-modal-eyebrow" class="eyebrow">New Entry</p>
+          <h2 id="transaction-modal-title" class="text-headline-md">Add Transaction</h2>
         </div>
-        <button class="icon-button" value="cancel" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+        <button class="icon-button" type="button" data-close-modal aria-label="Close"><span class="material-symbols-outlined">close</span></button>
       </div>
       <div class="space-y-3">
-        <label class="form-label">Description<input placeholder="e.g. Client invoice" /></label>
-        <label class="form-label">Amount<input type="number" min="0.01" step="0.01" placeholder="0.00" /></label>
-        <label class="form-label">Category<select><option>Food</option><option>Income</option><option>Rent</option><option>Transport</option><option>Shopping</option></select></label>
-        <label class="form-label">Date<input type="date" /></label>
+        <label class="form-label">Description<input required name="description" placeholder="e.g. Client invoice" /></label>
+        <label class="form-label">Amount<input required name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" /></label>
+        <label class="form-label">Category<select required name="category"><option value="Food">Food</option><option value="Income">Income</option><option value="Rent">Rent</option><option value="Transport">Transport</option><option value="Shopping">Shopping</option></select></label>
+        <label class="form-label">Date<input required name="date" type="date" /></label>
+        <label class="form-label">Note<input name="note" placeholder="Optional detail" /></label>
+        <p id="transaction-form-error" class="hidden text-sm font-semibold text-error" role="alert"></p>
       </div>
       <div class="mt-5 flex justify-end gap-2">
-        <button class="secondary-button" value="cancel">Cancel</button>
-        <button class="primary-button w-auto px-5" value="default">Save</button>
+        <button class="secondary-button" type="button" data-close-modal>Cancel</button>
+        <button id="transaction-submit-button" class="primary-button w-auto px-5" type="submit">Save</button>
       </div>
     </form>
   </dialog>
